@@ -1,0 +1,130 @@
+\documentclass[dvipdfmx]{jsarticle}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{cleveref}
+\usepackage{physics}
+\usepackage{color}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+
+\newcounter{BaseCounter}[section]
+
+\newtheoremstyle{JapanesePropositionStyle}{24pt}{}{}{}{\bfseries}{.}{1em}{\thmname{#1}\hspace{0.2em}\thmnumber{#2}\thmnote{\hspace{0.5em}(#3)}}
+\theoremstyle{JapanesePropositionStyle}
+
+\newtheorem{proposition}[BaseCounter]{Proposition}
+\newtheorem{note}[BaseCounter]{Note}
+\newtheorem{lemma}[BaseCounter]{Lemma}
+\newtheorem{corollary}[BaseCounter]{Corollary}
+\newtheorem{theorem}[BaseCounter]{Theorem}
+\newtheorem{definition}[BaseCounter]{Definition}
+\newtheorem{example}[BaseCounter]{Example}
+
+\makeatletter
+\newcommand\RedeclareMathOperator{%
+  \@ifstar{\def\rmo@s{m}\rmo@redeclare}{\def\rmo@s{o}\rmo@redeclare}%
+}
+\newcommand\rmo@redeclare[2]{%
+  \begingroup \escapechar\m@ne\xdef\@gtempa{{\string#1}}\endgroup
+  \expandafter\@ifundefined\@gtempa
+     {\@latex@error{\noexpand#1undefined}\@ehc}%
+     \relax
+  \expandafter\rmo@declmathop\rmo@s{#1}{#2}}
+\newcommand\rmo@declmathop[3]{%
+  \DeclareRobustCommand{#2}{\qopname\newmcodes@#1{#3}}%
+}
+\@onlypreamble\RedeclareMathOperator
+\makeatother
+
+
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Emb}{Emb}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\relint}{relint}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\coker}{coker}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\RedeclareMathOperator{\Im}{Im}
+
+\newcommand{\emb}{\hookrightarrow}
+
+\newcommand{\Mod}[1]{\textbf{Mod}_{#1}}
+\newcommand{\fMod}[1]{\textbf{fMod}_{#1}}
+\newcommand{\QCoh}[1]{\textbf{QCoh}_{#1}}
+\newcommand{\Coh}[1]{\textbf{Coh}_{#1}}
+
+\let\originalmiddle=\middle
+\def\middle#1{\mathrate}
+
+\begin{document}
+    \begin{enumerate}[label=(\roman*)]
+        \item $b = 1$より, 内部自己同型を考えれば, $G$はabel群である.
+        ゆえに, 有限abel群の構造定理より, 
+        \[
+            G = \prod_i \mathbb{Z}/p^{n_i}_i \mathbb{Z}    
+        \]
+        と表せる.
+        このとき, 任意の$i$について, 
+        \[
+            |\Aut(G)| = \abs{\Aut\qty(\prod_i \mathbb{Z}/p^{n_i}_i \mathbb{Z})} \geq \abs{\Aut\qty(\mathbb{Z}/p^{n_i}_i\mathbb{Z})}    
+        \]
+        となる.
+        ここで, $\mathbb{Z}/p_i\mathbb{Z}$は$\mathbb{Z}/p_i^{n_i}\mathbb{Z}$
+        の部分群とみなせるので, 任意の$n$について, 
+        $\abs{\Aut{\qty(\mathbb{Z}/n\mathbb{Z})}} = \abs{\qty(\mathbb{Z}/n\mathbb{Z})^\times}$
+        であることに注意すれば, 
+        \[
+            1 \leq \abs{\Aut(\mathbb{Z}/p_i\mathbb{Z})} = \abs{(\mathbb{Z}/p_i\mathbb{Z})^\times} 
+            \leq \abs{(\mathbb{Z}/p_i^{n_i}\mathbb{Z})^\times} = \abs{\Aut(\mathbb{Z}/p_i^{n_i}\mathbb{Z})} \leq \abs{\Aut(G)} = 1
+        \] 
+        となる.
+        したがって, $p_i^{n_i} = 1, 2$である.
+
+
+        ある$i$が存在して, $p_i^{n_i} = 2$とする.
+        このとき, ある$m$が存在して, $G = (\mathbb{Z}/2\mathbb{Z})^m$となるが, 
+        $m \geq 2$のときには位置を入れ替えるような自己同型が存在してしまうので, $m = 1$.
+        したがって, $G = \mathbb{Z}/2\mathbb{Z}$である.
+
+        また, 任意の$i$について, $p_i^{n_i} = 1$のときは, $G$は自明群である. 
+
+        \item $\phi: G  \to \Aut{G}$を内部自己同型を与える射とすれば, 
+        \[
+            \abs{G/\ker{\phi}} \cong \abs{\Im{\phi}} \leq \abs{\Aut(G)} = 2  
+        \]
+        となるので, $\abs{G/\ker{\phi}} = 1, 2$である.
+        ここで, $\abs{G}/ \abs{\phi} = \abs{G/\ker{\phi}}$であって, $\abs{G}$が奇数なので, 
+        $\abs{G/\ker{\phi}} = 1$であり, $\ker{\phi} = Z(G)$なので, $G$はabel群である.
+
+        有限アーベル群の構造定理より, 
+        \[
+            G =    \prod_i \mathbb{Z}/p^{n_i}_i \mathbb{Z} 
+        \]
+        と表せるが, 
+        \[
+            2 = |\Aut(G)| = \abs{\Aut\qty(\prod_i \mathbb{Z}/p^{n_i}_i \mathbb{Z})} \geq \prod_i\abs{\Aut\qty(\mathbb{Z}/p^{n_i}_i\mathbb{Z})}    
+        \]
+        なので, ただ一つの$j$を除いて, $\abs{\Aut\qty(\mathbb{Z}/p_i^{n_i}\mathbb{Z})} = 1$となる.
+        ここで, $|G|$が奇数であることと, (i)より, $p^{n_i}_i = 1$となる.
+        ゆえに, $G = \mathbb{Z}/p^{n_j}_j \mathbb{Z}$が従う.
+        さらに, 
+        \[
+            \Aut\qty(\mathbb{Z}/p_j\mathbb{Z}) \subseteq \Aut\qty(\mathbb{Z}/p^{n_j}_j\mathbb{Z}) = \Aut(G)    
+        \]
+        であって, $\abs{\Aut(\mathbb{Z}/p_j\mathbb{Z})} = p_j-1$なので, $p_j - 1 \leq |\Aut(G)| = 2$が成り立つ.
+        今, $p_j$は素数なので, $p_j = 3$であり, 
+        \[
+            2 = \abs{\Aut\qty(\mathbb{Z}/p_j\mathbb{Z})} \leq \abs{\Aut\qty(\mathbb{Z}/p^{n_j}_j\mathbb{Z})} = \abs{\Aut(G)} = 2        
+        \]
+        なので, $G = \mathbb{Z}/3\mathbb{Z}$である.
+    \end{enumerate}
+\end{document}
